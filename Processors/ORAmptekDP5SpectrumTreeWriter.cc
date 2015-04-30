@@ -28,6 +28,9 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::InitializeBranches()
     fTree->Branch("deviceID", &fDeviceID, "deviceID/i");
     fTree->Branch("infoFlags", &fInfoFlags, "infoFlags/i");
     fTree->Branch("eventSec", &fSec, "sec/i");
+    fTree->Branch("acqTime", &fAcqTime , "acqTime/i");
+    fTree->Branch("realTime", &fRealTime, "realTime/i");
+    
     fTree->Branch("spectrumLength", &fSpectrumLength, "spectrumLength/i");
     fTree->Branch("spectrum", fSpectrum, "waveform[spectrumLength]/i");
     
@@ -59,6 +62,9 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::ProcessMyDataRecord(
     fInfoFlags = fEventDecoder->GetInfoFlags();
     fDeviceID = fEventDecoder->GetSec();
     fSec = fEventDecoder->GetSec();
+    fAcqTime     =  fEventDecoder->GetAcqTime();
+    fRealTime    =  fEventDecoder->GetRealTime();
+
     
     
     

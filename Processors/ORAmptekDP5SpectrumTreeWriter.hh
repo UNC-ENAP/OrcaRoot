@@ -17,6 +17,7 @@ class ORAmptekDP5SpectrumTreeWriter : public ORVTreeWriter
         fInfoFlags = 0;
         fDeviceID = 0;
         fSec = 0; 
+        fAcqTime = 0; fRealTime = 0;
           //obsolete:
           fSubSec = 0; fTimeStamp = 0; fEventID = 0;fCrate = 0; fCard = 0; fFiber =0;
         fChannel = 0; fTrigChannel = 0; fEnergy = 0; fWaveformLength = 0;
@@ -37,6 +38,8 @@ class ORAmptekDP5SpectrumTreeWriter : public ORVTreeWriter
     UInt_t fSpectrumLength;
     UInt_t fInfoFlags;
     UInt_t fDeviceID;
+    UInt_t fAcqTime;
+    UInt_t fRealTime;
     
     //TODO: there are some vars remaining from EDW SLT object ... -tb-
     UInt_t fSec, fSubSec;

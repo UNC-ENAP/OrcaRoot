@@ -12,7 +12,7 @@ ORAmptekDP5SpectrumDecoder::ORAmptekDP5SpectrumDecoder() { fDataRecord = NULL; f
 bool ORAmptekDP5SpectrumDecoder::SetDataRecord(UInt_t* dataRecord) 
 {
   fDataRecord = dataRecord;
-  fSpectrumLength = dataRecord[4] | 0xffff;
+  fSpectrumLength = dataRecord[4] & 0xffff;
     UInt_t statusSize=0;
     if(HasStatus()) statusSize=64/4; // 64 bytes -> Int32
     
