@@ -57,10 +57,14 @@
   //#include "ORKatrinFLTHitrateDecoder.hh"
   //#include "ORKatrinFLTHitrateTreeWriter.hh"
 
-  //this part is for the UW crate
-  #include "ORTrig4ChanDecoder.hh"
-  #include "ORTrig4ChanShaperCompoundProcessor.hh"
-  #include "ORTrig4ChanShaperFilter.hh"
+  //this part is for the AmptekDP5 card
+  #include "ORAmptekDP5SpectrumDecoder.hh"
+  #include "ORAmptekDP5SpectrumTreeWriter.hh"
+
+//this part is for the UW crate
+#include "ORTrig4ChanDecoder.hh"
+#include "ORTrig4ChanShaperCompoundProcessor.hh"
+#include "ORTrig4ChanShaperFilter.hh"
 
 
   //this part is for the UW crate / Klaus Schloesser -tb- 2009-04-03
@@ -301,6 +305,10 @@ int main(int argc, char** argv)
 	
 	ORKatrinV4FLTHitRateTreeWriter katrinV4FLTHitRateTreeWriter("katrinV4HitRateTree");
 	dataProcManager.AddProcessor(&katrinV4FLTHitRateTreeWriter);
+	
+	//this part is for the AmptekDP5 card -tb- 2015-04-27
+	ORAmptekDP5SpectrumTreeWriter amptekDP5SpectrumTreeWriter("amptekDP5SpectrumTree");
+	dataProcManager.AddProcessor(&amptekDP5SpectrumTreeWriter);
 	
 	
   //this part is for the UW crate
