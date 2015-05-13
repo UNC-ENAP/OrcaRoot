@@ -138,11 +138,7 @@ void ORSIS3302Decoder::DumpBufferHeader()
 
 void ORSIS3302Decoder::Dump(UInt_t* dataRecord) //debugging 
 {
-	size_t iChannel, iEvent;
-	
 	ORLog(kDebug) << std::endl << std::endl << "ORSIS3302Decoder::Dump():" << std::endl ;
-	iChannel = 0;
-	iEvent = 0;
 	if(!SetDataRecord(dataRecord)) return; 
 	ORLog(kDebug) 
 	<< "  Header functions: " << std::endl

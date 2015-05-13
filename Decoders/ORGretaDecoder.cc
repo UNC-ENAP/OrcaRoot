@@ -227,11 +227,7 @@ void ORGretaDecoder::DumpBufferHeader()
 
 void ORGretaDecoder::Dump(UInt_t* dataRecord) //debugging 
 {
-  size_t iChannel, iEvent;
-  
   ORLog(kDebug) << std::endl << std::endl << "ORGretaDecoder::Dump():" << std::endl ;
-  iChannel = 0;
-  iEvent = 0;
   if(!SetDataRecord(dataRecord)) return; 
 	ORLog(kDebug) 
 	  << "  Header functions: " << std::endl

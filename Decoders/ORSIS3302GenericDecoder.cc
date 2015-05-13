@@ -126,11 +126,7 @@ bool ORSIS3302GenericDecoder::IsValid()
 
 void ORSIS3302GenericDecoder::Dump(UInt_t* dataRecord) //debugging 
 {
-    size_t iChannel, iEvent;
-    
     ORLog(kDebug) << std::endl << std::endl << "ORSIS3302GenericDecoder::Dump():" << std::endl ;
-    iChannel = 0;
-    iEvent = 0;
     if(!SetDataRecord(dataRecord)) return; 
     ORLog(kDebug) 
     << "  Header functions: " << std::endl
