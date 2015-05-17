@@ -21,6 +21,7 @@ class ORGretaDecoder: public ORVDigitizerDecoder
     enum EGretaTriggerMode { kInternal = 0,
                              kExternal,
                              kValidation };
+    static const UInt_t kDownSampleFactor[];
     
     virtual std::string GetDataObjectPath() { return "ORGretinaModel:Gretina"; }  
     virtual std::string GetDictionaryObjectPath() { return "ORGretinaModel"; }  
@@ -79,6 +80,7 @@ class ORGretaDecoder: public ORVDigitizerDecoder
     virtual UInt_t GetPileUpWindow();
     virtual EGretaPolarity GetPolarity();
     virtual EGretaTriggerMode GetTriggerMode();
+    virtual UInt_t GetDownSampleFactor();
 
     /* Functions satisfying the ORVDigitizerDecoder interface. */
     virtual inline double GetSamplingFrequency() { return .1; }

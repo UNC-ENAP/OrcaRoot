@@ -7,6 +7,8 @@
 
 //**************************************************************************************
 
+const UInt_t ORGretaDecoder::kDownSampleFactor[] = {1, 2, 4, 8, 16};
+
 ORGretaDecoder::ORGretaDecoder() 
 { 
   fDataRecord = NULL; 
@@ -191,6 +193,11 @@ ORGretaDecoder::EGretaPolarity ORGretaDecoder::GetPolarity()
 ORGretaDecoder::EGretaTriggerMode ORGretaDecoder::GetTriggerMode()
 {
   return (EGretaTriggerMode) GetIntValueFromKeyArray("Trigger Mode", CrateOf(), CardOf(), GetChannelNum());
+}
+
+UInt_t ORGretaDecoder::GetDownSampleFactor()
+{
+  return kDownSampleFactor[GetIntValueFromKey("Down Sample", CrateOf(), CardOf())];
 }
 
 //Error checking: **********************************************************************

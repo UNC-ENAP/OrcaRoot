@@ -6,6 +6,8 @@
 
 using namespace std;
 
+const UInt_t ORGretina4MDecoder::kDownSampleFactor[] = {1, 2, 4, 8, 16};
+
 ORGretina4MDecoder::ORGretina4MDecoder() 
 {
 }
@@ -50,6 +52,7 @@ UInt_t ORGretina4MDecoder::GetParameter(UInt_t par, UInt_t ccc)
   // first find a key
   const char* key = "";
   if(par == kIntTime) key = "Integration Time";
+  if(par == kDownSample) key = "Down Sample";
   //if(par == kChPreSum) key = "Chpsrt";
   if(par == kChPreSum) key = "Enabled";
   if(par == kChPreSum) key = "Mrpsrt";

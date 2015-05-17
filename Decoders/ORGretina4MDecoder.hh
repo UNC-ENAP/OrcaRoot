@@ -20,6 +20,7 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
     enum EGretina4MConsts { kEventDataLen = 1024, kEventHeaderLen = 15, kWFLen = 2018 };
     enum ECardPars { 
       kIntTime = 0, // Integration time (rise time) of trap filter
+      kDownSample, // Down sampling. Use kDownSampleFactor to get multiplier
       kNCardPars
     };
     enum EChanPars { 
@@ -28,6 +29,7 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
       kNPars, 
       kNChanPars = kNPars-kNCardPars
     };
+    static const UInt_t kDownSampleFactor[];
 
     ORGretina4MDecoder();
     virtual ~ORGretina4MDecoder() {}
@@ -70,6 +72,8 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
     virtual UInt_t GetChannelParameter(EChanPars par, UInt_t crate, UInt_t card, UInt_t channel); 
     virtual inline UInt_t GetEnergyNormalization()
       { return GetCardParameter(kIntTime, CrateOf(), CardOf()); }
+    virtual inline UInt_t GetDownSampleFactor()
+      { return kDownSampleFactor[GetCardParameter(kDownSample, CrateOf(), CardOf())]; }
 
   protected:
     // fast pointer to event data
