@@ -26,6 +26,7 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
     enum EChanPars { 
       kChPreSum = kNCardPars, // channel presum (n samples)
       kMRPreSum, // additional presum for multi-rate mode (i.e. for baseline, flattop)
+      kEnabled,
       kNPars, 
       kNChanPars = kNPars-kNCardPars
     };

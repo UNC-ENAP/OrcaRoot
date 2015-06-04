@@ -51,12 +51,13 @@ UInt_t ORGretina4MDecoder::GetParameter(UInt_t par, UInt_t ccc)
   // otherwise we have to look up the info from the header
   // first find a key
   const char* key = "";
-  if(par == kIntTime) key = "Integration Time";
-  if(par == kDownSample) key = "Down Sample";
-  //if(par == kChPreSum) key = "Chpsrt";
-  if(par == kChPreSum) key = "Enabled";
-  if(par == kChPreSum) key = "Mrpsrt";
-  else {
+  switch(par) {
+  case kIntTime: key = "Integration Time"; break;
+  case kDownSample: key = "Down Sample"; break;
+  case kChPreSum: key = "Chpsrt"; break;
+  case kEnabled: key = "Enabled"; break;
+  case kMRPreSum: key = "Mrpsrt"; break;
+  default:
     ORLog(kError) << "Unknown card parameter " << par << endl;
     return (UInt_t) -1;
   }
