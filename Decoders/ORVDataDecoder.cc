@@ -5,6 +5,7 @@
 #include "ORUtils.hh"
 #include "ORLogger.hh"
 #include <iomanip>
+#include <sstream>
 using ORUtils::BitConcat;
 
 void ORVDataDecoder::Swap(UInt_t* dataRecord)
@@ -14,16 +15,19 @@ void ORVDataDecoder::Swap(UInt_t* dataRecord)
   }
 }
 
-void ORVDataDecoder::DumpHex(UInt_t* dataRecord)
+void ORVDataDecoder::DumpHex(UInt_t* dataRecord, UInt_t rowLength)
 {
-  ORLog(kRoutine) << "DumpHex for record from DataId " 
-                  << DataIdOf(dataRecord) << " (= 0x" 
-                  << std::hex << DataIdOf(dataRecord) << ")" 
-                  << std::endl;
+  if(rowLength == 0) rowLength = 8;
+  std::stringstream str;
+  str << "DumpHex for record from DataId " 
+      << DataIdOf(dataRecord) << " (= 0x" 
+      << std::hex << DataIdOf(dataRecord) << ")";
   for(size_t i=0; i<LengthOf(dataRecord); i++) {
-    ORLog(kRoutine) << i << "\t0x" << std::hex << std::setfill('0') 
-                    << std::setw(8) << dataRecord[i] << std::dec << std::endl;
+    if(i%rowLength == 0) str << "\n" << std::dec << std::setfill(' ') << std::setw(5) << i << ": ";
+    else str << ' ';
+    str << std::hex << std::setfill('0') << std::setw(8) << dataRecord[i];
   }
+  ORLog(kRoutine) << str.str() << std::endl;
 }
 
 const ORVDictValue* ORVDataDecoder::GetValueFromKey(std::string key, UInt_t crate,

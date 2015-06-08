@@ -60,7 +60,7 @@ class ORVDataDecoder
      */
     virtual void Swap(UInt_t* dataRecord);
 
-    virtual void DumpHex(UInt_t* dataRecord);
+    virtual void DumpHex(UInt_t* dataRecord, UInt_t rowLength = 0);
 
     //! useful for error checking in ORVDataProcessor
     static UInt_t GetIllegalDataId() { return 0x1; } 

@@ -15,6 +15,7 @@ ORHexDumpAllProc::ORHexDumpAllProc() : ORDataProcessor(NULL)
   fCheckLimits=false;
   fBegin=0;
   fEnd=0;
+  fLineLength=0;
 }
 
 ORHexDumpAllProc::~ORHexDumpAllProc()
@@ -26,6 +27,7 @@ ORHexDumpAllProc::EReturnCode ORHexDumpAllProc::ProcessDataRecord(UInt_t* record
 {
   if (!fDoProcess || !fDoProcessRun || !fRunContext) return kFailure;
   if (fCheckLimits && ((fRunContext->GetPacketNumber() < fBegin) || (fEnd>=0 && fRunContext->GetPacketNumber() > fEnd))) return kSuccess;
+  if (!fPacketList.empty() && !fPacketList.count(fRunContext->GetPacketNumber())) return kSuccess; //if list exists and not in list, return
 
   if(fRunContext->MustSwap() && !fRunContext->IsRecordSwapped()) {
     /* Swapping the record.  This only must be done once! */
@@ -36,9 +38,8 @@ ORHexDumpAllProc::EReturnCode ORHexDumpAllProc::ProcessDataRecord(UInt_t* record
   static map<int, string> deviceNames = MakeIDMap();
   if(deviceNames.size() == 0) return kAlarm;
   UInt_t dataID = fDataDecoder->DataIdOf(record);
-  ORLog(kRoutine) << "Packet Number: " << fRunContext->GetPacketNumber() << endl;
-  ORLog(kRoutine) << deviceNames[dataID] << " (dataID = " << dataID << "):" << endl;
-  fDataDecoder->DumpHex(record);
+  ORLog(kRoutine) << "Packet Number " << fRunContext->GetPacketNumber() << ": " << deviceNames[dataID] << " (dataID = " << dataID << ")" << endl;
+  fDataDecoder->DumpHex(record, fLineLength);
 
   return kSuccess;
 }

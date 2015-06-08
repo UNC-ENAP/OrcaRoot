@@ -51,6 +51,8 @@ static const char Usage[] =
 "  -b, --begin  [packet #] : dump packets starting with packet #.\n"
 "  -e, --end    [packet #] : stop dumping packets after packet #.\n"
 "  -p, --packet [packet #] : dump only packet #.\n"
+"  -f, --filepackets [file name] : get list of packets to dump from file.\n"
+"  -l, --linelength [words per line] : # of 32 bit words to print in each line.\n"
 "\n"
 "Example usage:\n"
 "orhexdump run194ecpu\n"
@@ -81,16 +83,19 @@ int main(int argc, char** argv)
     {"verbosity", required_argument, 0, 'v'},
     {"begin", required_argument, 0, 'b'},
     {"end", required_argument, 0, 'e'},
-    {"packet", required_argument, 0, 'p'}
+    {"packet", required_argument, 0, 'p'},
+    {"filepackets", required_argument, 0, 'f'},
+    {"linelength", required_argument, 0, 'l'}
   };
 
   string label = "OR";
   ORVReader* reader = NULL;
   Int_t begin = -1;
   Int_t end = -1;
-
+  string filepackets = "";
+  UInt_t linelength = 0;
   while(1) {
-    char optId = getopt_long(argc, argv, "hvb:e:p:", longOptions, NULL);
+    char optId = getopt_long(argc, argv, "hvb:e:p:f:", longOptions, NULL);
     if(optId == -1) break;
     switch(optId) {
       case('h'): // help
@@ -122,6 +127,12 @@ int main(int argc, char** argv)
 	}
 	begin=atoi(optarg);
 	end=begin;
+	break;
+      case('f'): // filepackets
+	filepackets = optarg;
+	break;
+      case('l'): // linelength
+	linelength=atoi(optarg);
 	break;
       default: // unrecognized option
         ORLog(kError) << Usage;
@@ -182,6 +193,11 @@ int main(int argc, char** argv)
 
   ORHexDumpAllProc hexDumper;
   if(begin != -1 || end != -1) hexDumper.SetLimits(begin, end);
+  if(filepackets != "") {
+    ifstream in(filepackets.c_str());
+    hexDumper.SetPacketList(in);
+  }
+  if(linelength > 0) hexDumper.SetLineLength(linelength);
   dataProcManager.AddProcessor(&hexDumper);
 
   //ORCaen775tdcDecoder
