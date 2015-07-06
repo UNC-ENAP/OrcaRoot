@@ -141,12 +141,12 @@ inline size_t ORAmptekDP5SpectrumDecoder::GetWaveformLen()
 
 inline UInt_t ORAmptekDP5SpectrumDecoder::GetSubSec() 
 {
-	return (fDataRecord[2]); //f0 is lsb of timestamp -tb-
+	return (fDataRecord[3]); //usec of gettimeofday -tb-
 }
 
 inline UInt_t ORAmptekDP5SpectrumDecoder::GetSec()
 {
-	return (fDataRecord[3]); //f1 & 0xffff is msb of timestamp -tb-
+	return (fDataRecord[2]); //unix time -tb-
 }
 
 inline UInt_t ORAmptekDP5SpectrumDecoder::GetChannelMap()
