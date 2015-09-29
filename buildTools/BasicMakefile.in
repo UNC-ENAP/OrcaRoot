@@ -63,7 +63,7 @@ $(SHLIB): $(OBJECTS) $(DICTOBJECTS)
 
 clean:
 	@echo "$(OUTPREFIX)Cleaning"
-	$(VERBOSE)rm -f $(SHLIB) $(APPS) *.o $(DEPFILES) OR${PKGNAME}_dict.?  
+	$(VERBOSE)rm -f $(SHLIB) $(APPS) *.o $(DEPFILES) OR${PKGNAME}_dict.? $(AUTOLINKDEF) 
 
 $(DICTCFILES) : $(DICTHFILES) $(LINKDEF) 
 	@echo "$(OUTPREFIX)Running rootcint .... $(notdir $(LINKDEF))"
