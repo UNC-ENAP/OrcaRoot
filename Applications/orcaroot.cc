@@ -72,8 +72,8 @@ int main(int argc, char** argv)
     {"help", no_argument, 0, 'h'},
     {"verbosity", required_argument, 0, 'v'},
     {"label", required_argument, 0, 'l'},
-    {"keepalive", optional_argument, 0, 'k'},
-    {"maxreconnect", required_argument, 0, 'm'},
+    //{"keepalive", optional_argument, 0, 'k'},
+    //{"maxreconnect", required_argument, 0, 'm'},
     {"daemon", required_argument, 0, 'd'},
     {"connections", required_argument, 0, 'c'}
   };
@@ -81,10 +81,10 @@ int main(int argc, char** argv)
   string label = "OR";
   ORVReader* reader = NULL;
 
-  bool keepAliveSocket = false;
+  //bool keepAliveSocket = false;
   bool runAsDaemon = false;
-  unsigned long timeToSleep = 10; //default sleep time for sockets.
-  unsigned int reconnectAttempts = 0; // default reconnect tries for sockets.
+  //unsigned long timeToSleep = 10; //default sleep time for sockets.
+  //unsigned int reconnectAttempts = 0; // default reconnect tries for sockets.
   unsigned int portToListenOn = 0;
   unsigned int maxConnections = 5; // default connections accepted by server
 
@@ -111,6 +111,7 @@ int main(int argc, char** argv)
       case('l'): // label
         label = optarg;
         break;
+/*
       case('k'):
         if(!optarg) keepAliveSocket = true;
         else {
@@ -121,9 +122,10 @@ int main(int argc, char** argv)
       case('m'):
         reconnectAttempts = abs(atoi(optarg));
         break;
+*/
       case('d'):
-        reconnectAttempts = 0;
-        keepAliveSocket = false;
+        //reconnectAttempts = 0;
+        //keepAliveSocket = false;
         runAsDaemon = true;
         portToListenOn = abs(atol(optarg));
         break;

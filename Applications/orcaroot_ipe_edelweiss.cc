@@ -199,7 +199,7 @@ int main(int argc, char** argv)
 
   ORHandlerThread* handlerThread = new ORHandlerThread(); // new -tb-
   handlerThread->StartThread();                           // new -tb-
-  bool useShaperDecoder  = true; // new -tb- 2008-02-19
+  //bool useShaperDecoder  = true; // new -tb- 2008-02-19
 
   string readerArg = argv[optind];
   size_t iColon = readerArg.find(":");
@@ -216,7 +216,7 @@ int main(int argc, char** argv)
       size_t iKatrinKey = str.find("OREdelweissSLTModel");
       if(iKatrinKey != string::npos){
         ORLog(kRoutine) << "Found key " << "OREdelweissSLTModel" << " ... is a Edelweiss IPE crate file ..." << endl;
-        useShaperDecoder = false;
+        //useShaperDecoder = false;
       }
       //exit(999);
     }else{
