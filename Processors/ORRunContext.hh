@@ -121,7 +121,7 @@ class ORRunContext
 
     // for use by a managing process
     // FIXME: allow only ORRunDataProcessor to call this?
-    virtual void SetRecordSwapped() { fIsRecordSwapped = true; }
+    virtual void SetRecordSwapped(Bool_t swapped = true) { fIsRecordSwapped = swapped; }
     
 
   protected:
