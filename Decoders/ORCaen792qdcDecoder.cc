@@ -24,7 +24,7 @@ void ORCaen792qdcDecoder::LoadLocPtrs(UInt_t* record)
 {
   // loop over record and look for / skip over bad data
   fLocPtrs.clear();
-  size_t i=2;
+  size_t i = HasTimestamp(record) ? 4 : 2;
   while(i<LengthOf(record)-1) {
     if(!IthWordIsData(record, i)) {
       ORLog(kWarning) << "expected word " << i+1 << " to be a data word. Hex dump:" << endl;

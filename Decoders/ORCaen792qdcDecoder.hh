@@ -26,6 +26,13 @@ class ORCaen792qdcDecoder : public ORVBasicTreeDecoder
     virtual inline UInt_t IthValueIsValid(UInt_t* record, size_t iRow)
       { return ((GetLocPtr(record, iRow)[0] & 0x07000000) >> 24) == 0x000; }
 
+    virtual inline UInt_t HasTimestamp(UInt_t* record)
+      { return record[1] && 0x00000001; }
+    virtual inline UInt_t GetTSSec(UInt_t* record)
+      { return HasTimestamp(record) ? record[2] : 0; }
+    virtual inline UInt_t GetTSMicroSec(UInt_t* record)
+      { return HasTimestamp(record) ? record[3] : 0; }
+
     virtual std::string GetDataObjectPath() { return "ORCaen792Model:Qdc"; }
     virtual std::string GetValueName() { return "qdc"; }
     virtual size_t GetNChannels() { return 32; }
