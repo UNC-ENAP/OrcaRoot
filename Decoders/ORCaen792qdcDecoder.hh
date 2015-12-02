@@ -27,7 +27,7 @@ class ORCaen792qdcDecoder : public ORVBasicTreeDecoder
       { return ((GetLocPtr(record, iRow)[0] & 0x07000000) >> 24) == 0x000; }
 
     virtual inline UInt_t HasTimestamp(UInt_t* record)
-      { return record[1] && 0x00000001; }
+      { return record[1] & 0x00000001; }
     virtual inline UInt_t GetTSSec(UInt_t* record)
       { return HasTimestamp(record) ? record[2] : 0; }
     virtual inline UInt_t GetTSMicroSec(UInt_t* record)
