@@ -20,11 +20,14 @@ class ORRunTimesCalculator : public ORUtilityProcessor
       { return fRunStopTimes[fRunNumberIndex[runNumber]]; }
     virtual Int_t GetRunDuration(Int_t runNumber) 
       { return GetRunStopTime(runNumber) - GetRunStartTime(runNumber); }
+    virtual Int_t GetRunNPackets(Int_t runNumber)
+      { return fRunNPackets[fRunNumberIndex[runNumber]]; }
 
   protected:
     std::map<Int_t,Int_t> fRunNumberIndex;
     std::vector<Int_t> fRunStartTimes;
     std::vector<Int_t> fRunStopTimes;
+    std::vector<Int_t> fRunNPackets;
 };
 
 #endif

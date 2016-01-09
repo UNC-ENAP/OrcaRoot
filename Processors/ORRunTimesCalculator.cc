@@ -16,6 +16,7 @@ ORDataProcessor::EReturnCode ORRunTimesCalculator::EndRun()
   fRunNumberIndex[fRunContext->GetRunNumber()] = fRunStartTimes.size();
   fRunStartTimes.push_back(fRunContext->GetStartTime());
   fRunStopTimes.push_back(fRunContext->GetStopTime());
+  fRunNPackets.push_back(fRunContext->GetPacketNumber());
   return kSuccess;
 }
 
