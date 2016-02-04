@@ -31,6 +31,8 @@ class ORHexDumpAllProc : public ORDataProcessor
       while(list >> pkt) fPacketList.insert(pkt);
     }
 
+    virtual void AddDevice(std::string& device) { fDeviceList.insert(device); }
+
   private:
     std::map<int, std::string> MakeIDMap();
 
@@ -40,6 +42,7 @@ class ORHexDumpAllProc : public ORDataProcessor
     Int_t fEnd; //if fEnd<0, output until end of file
     UInt_t fLineLength;
     std::set<Int_t> fPacketList;
+    std::set<std::string> fDeviceList;
 };
 
 #endif

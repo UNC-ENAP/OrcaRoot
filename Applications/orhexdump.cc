@@ -6,30 +6,7 @@
 #include "ORFileReader.hh"
 #include "ORLogger.hh"
 #include "ORSocketReader.hh"
-
-#include "OR1DHistoHistogramsDecoder.hh"
-#include "ORAD3511ADCDecoder.hh"
-#include "ORAD413ADCDecoder.hh"
-#include "ORAD811ADCDecoder.hh"
-#include "ORADC2249ADCDecoder.hh"
-#include "ORKatrinFLTEnergyDecoder.hh"
-#include "ORCaen775tdcDecoder.hh"
-#include "ORCaen785adcDecoder.hh"
-#include "ORCaen792qdcDecoder.hh"
-#include "ORDGF4cEventDecoder.hh"
-#include "ORDGF4cMCADecoder.hh"
-#include "ORL2551ScalersDecoder.hh"
-#include "ORL4532channelTriggerDecoder.hh"
-#include "ORL4532mainTriggerDecoder.hh"
-#include "ORLC950ScopeDataDecoder.hh"
 #include "ORRunDecoder.hh"
-#include "ORShaperShaperDecoder.hh"
-#include "ORTDC3377tdcDecoder.hh"
-#include "ORTek754DScopeDataDecoder.hh"
-#include "ORTrigger32ClockDecoder.hh"
-#include "ORTrigger32LiveTimeDecoder.hh"
-#include "ORVTrigger32GTIDDecoder.hh"
-
 #include "ORHexDumpAllProc.hh"
 
 using namespace std;
@@ -52,12 +29,15 @@ static const char Usage[] =
 "  -e, --end    [packet #] : stop dumping packets after packet #.\n"
 "  -p, --packet [packet #] : dump only packet #.\n"
 "  -f, --filepackets [file name] : get list of packets to dump from file.\n"
+"  -d, --device [device name] : dump packets only for one device.\n"
 "  -l, --linelength [words per line] : # of 32 bit words to print in each line.\n"
 "\n"
 "Example usage:\n"
 "orhexdump run194ecpu\n"
 "  Hex-dump local file run194ecpu with default verbosity, etc.\n"
 "orhexdump --begin 50 --end 60 run194ecpu\n"
+"  Hex-dump packets 50 through 60 or local file run194ecpu.\n"
+"orhexdump --device ORRunModel:Run --run194ecpu\n"
 "  Hex-dump packets 50 through 60 or local file run194ecpu.\n"
 "orhexdump run*\n"
 "  Same as before, but run over all files beginning with \"run\".\n"
@@ -85,6 +65,7 @@ int main(int argc, char** argv)
     {"end", required_argument, 0, 'e'},
     {"packet", required_argument, 0, 'p'},
     {"filepackets", required_argument, 0, 'f'},
+    {"device", required_argument, 0, 'd'},
     {"linelength", required_argument, 0, 'l'}
   };
 
@@ -93,9 +74,10 @@ int main(int argc, char** argv)
   Int_t begin = -1;
   Int_t end = -1;
   string filepackets = "";
+  string device = "";
   UInt_t linelength = 0;
   while(1) {
-    char optId = getopt_long(argc, argv, "hvb:e:p:f:", longOptions, NULL);
+    char optId = getopt_long(argc, argv, "hv:b:e:p:f:", longOptions, NULL);
     if(optId == -1) break;
     switch(optId) {
       case('h'): // help
@@ -131,6 +113,8 @@ int main(int argc, char** argv)
       case('f'): // filepackets
 	filepackets = optarg;
 	break;
+      case('d'): // device
+        device = optarg;
       case('l'): // linelength
 	linelength=atoi(optarg);
 	break;
@@ -166,56 +150,15 @@ int main(int argc, char** argv)
   ORLog(kRoutine) << "Setting up data processing manager..." << endl;
   ORDataProcManager dataProcManager(reader);
 
-  //OR1DHistoHistogramsDecoder histDecoder;
-  //ORDataProcessor histProc(&histDecoder);
-  //histProc.SetDebugRecord();
-  //dataProcManager.AddProcessor(&histProc);
-
-  //ORAD3511ADCDecoder ad3511ADCDecoder;
-  //ORDataProcessor adc3511ADCProc(&ad3511ADCDecoder);
-  //adc3511ADCProc.SetDebugRecord();
-  //dataProcManager.AddProcessor(&adc3511ADCProc);
-
-  //ORAD413ADCDecoder ad413ADCDecoder;
-  //ORDataProcessor ad413ADCProc(&ad413ADCDecoder);
-  //ad413ADCProc.SetDebugRecord();
-  //dataProcManager.AddProcessor(&ad413ADCProc);
-
-  //ORAD811ADCDecoder ad811ADCDecoder;
-  //ORDataProcessor ad811ADCProc(&ad811ADCDecoder);
-  //ad811ADCProc.SetDebugRecord();
-  //dataProcManager.AddProcessor(&ad811ADCProc);
-
-  //ORKatrinFLTEnergyDecoder augerFLTEnergyDecoder;
-  //ORDataProcessor augerFLTProc(&augerFLTEnergyDecoder);
-  //augerFLTProc.SetDebugRecord();
-  //dataProcManager.AddProcessor(&augerFLTProc);
-
   ORHexDumpAllProc hexDumper;
   if(begin != -1 || end != -1) hexDumper.SetLimits(begin, end);
   if(filepackets != "") {
     ifstream in(filepackets.c_str());
     hexDumper.SetPacketList(in);
   }
+  if(device != "") hexDumper.AddDevice(device);
   if(linelength > 0) hexDumper.SetLineLength(linelength);
   dataProcManager.AddProcessor(&hexDumper);
-
-  //ORCaen775tdcDecoder
-  //ORCaen785adcDecoder
-  //ORCaen792qdcDecoder
-  //ORDGF4cEventDecoder
-  //ORDGF4cMCADecoder
-  //ORL2551ScalersDecoder
-  //ORL4532channelTriggerDecoder
-  //ORL4532mainTriggerDecoder
-  //ORLC950ScopeDataDecoder
-  //ORRunDecoder
-  //ORShaperShaperDecoder
-  //ORTDC3377tdcDecoder
-  //ORTek754DScopeDataDecoder
-  //ORTrigger32ClockDecoder
-  //ORTrigger32LiveTimeDecoder
-  //ORVTrigger32GTIDDecoder
 
   ORLog(kRoutine) << "Start processing..." << endl;
   dataProcManager.ProcessDataStream();

@@ -38,7 +38,13 @@ ORHexDumpAllProc::EReturnCode ORHexDumpAllProc::ProcessDataRecord(UInt_t* record
   static map<int, string> deviceNames = MakeIDMap();
   if(deviceNames.size() == 0) return kAlarm;
   UInt_t dataID = fDataDecoder->DataIdOf(record);
-  ORLog(kRoutine) << "Packet Number " << fRunContext->GetPacketNumber() << ": " << deviceNames[dataID] << " (dataID = " << dataID << ")" << endl;
+  string deviceName = deviceNames[dataID];
+  if(deviceName == "") deviceName = "UNKNOWN";
+
+  if(!fDeviceList.empty() && !fDeviceList.count(deviceName)) return kSuccess;
+
+  ORLog(kRoutine) << "Packet Number " << fRunContext->GetPacketNumber() 
+                  << ": " << deviceName << " (dataID = " << dataID << ")" << endl;
   fDataDecoder->DumpHex(record, fLineLength);
 
   return kSuccess;
