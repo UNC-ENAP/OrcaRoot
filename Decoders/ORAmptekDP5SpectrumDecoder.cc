@@ -88,7 +88,7 @@ void ORAmptekDP5SpectrumDecoder::DumpBufferHeader()
   }
 }
 
-
+ 
 size_t ORAmptekDP5SpectrumDecoder::CopySpectrumData( UInt_t* spectrum, 
                                                     size_t len )
 //copies the waveform data to the array pointed to by
@@ -111,6 +111,29 @@ size_t ORAmptekDP5SpectrumDecoder::CopySpectrumData( UInt_t* spectrum,
     }
     return len;
 }
+
+
+//copies the status data to the array pointed to by
+//status, which is of length 64 bytes
+size_t ORAmptekDP5SpectrumDecoder::CopyStatusData(Char_t* status)
+{
+     
+    if( HasStatus() ){
+        size_t len = GetSpectrumLen(); 
+        UChar_t* spectrumData = GetSpectrumDataPointer();
+        Char_t* statusData = (Char_t*)( &(spectrumData[3*len]) );
+        for(size_t i=0;i<64;i++){
+            status[i] = statusData[i];  
+        }
+    }else{
+        for(size_t i=0;i<64;i++){
+            status[i] = 0;  
+        }
+    }
+    return 64;
+}
+
+
 
 
 

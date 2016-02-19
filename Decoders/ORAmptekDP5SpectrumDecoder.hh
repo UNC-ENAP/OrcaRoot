@@ -35,7 +35,7 @@ public:
     virtual std::string GetDataObjectPath() { return "ORAmptekDP5Model:AmptekDP5Spectrum"; }  
     //!< AmptekDP5Spectrum is the key in ORAmptekDP5Model.m in - (NSDictionary*) ORAmptekDP5Model::dataRecordDescription -tb- 2015-04-12 
 	
-    virtual bool SetDataRecord(UInt_t* record);
+    virtual bool SetDataRecord(UInt_t* record);  
 	
     //Functions that return data from buffer header:
     virtual inline UInt_t GetSec();
@@ -53,6 +53,7 @@ public:
     virtual inline size_t GetSpectrumLen(); 
     virtual inline UChar_t* GetSpectrumDataPointer();
     virtual size_t CopySpectrumData(UInt_t* spectrum, size_t len);
+    virtual size_t CopyStatusData(Char_t* status);
     virtual inline UInt_t GetInfoFlags();
     virtual inline UInt_t GetDeviceID();
     virtual inline UInt_t HasStatus();

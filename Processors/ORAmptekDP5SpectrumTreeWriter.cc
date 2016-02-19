@@ -33,7 +33,9 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::InitializeBranches()
     
     fTree->Branch("spectrumLength", &fSpectrumLength, "spectrumLength/i");
     fTree->Branch("spectrum", fSpectrum, "waveform[spectrumLength]/i");
+    fTree->Branch("status", fStatus, "status[64]/B");//signed bytes
     
+    fTree->Branch("boardTemperature", &fBoardTemperature, "boardTemperature/I");//signed int
     
   //fTree->Branch("wfLength", &fWaveformLength, "wfLength/i");
   //fTree->Branch("eventSubSec", &fSubSec, "eventSubSec/i");//i=unsigned (capital i=I signed int)
@@ -71,7 +73,7 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::ProcessMyDataRecord(
     if (ORLogger::GetSeverity() >= ORLogger::kDebug) 
     { 
         ORLog(kDebug) << "ProcessMyDataRecord(): "
-        << "deviceID-sec-infoFlags-spectrumLen = "
+        << "deviceID-sec-infoFlags-spectrumLen-statusLen64 = "
         << fDeviceID  << "-"
         << fSec << "-" << fInfoFlags << "-" 
         << "-" << fSpectrumLength  //-tb- 2015-04-16
@@ -84,6 +86,11 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::ProcessMyDataRecord(
     }
     
     fEventDecoder->CopySpectrumData( fSpectrum, kMaxSpectrumLength );
+    fEventDecoder->CopyStatusData( fStatus ); 
+        ORLog(kDebug) << "fEventDecoder->CopyStatusData( fStatus ): status[34]=board temperature is "
+        << int(fStatus[34])  
+        << endl;
+    fBoardTemperature = int(fStatus[34]);
     
     return kSuccess;
     
