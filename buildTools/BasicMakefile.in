@@ -30,6 +30,7 @@ ifndef NOLINKDEF
 endif
 DICTCFILES   := $(if $(LINKDEF),OR${PKGNAME}_dict.C,)
 DICTOBJECTS  := $(if $(LINKDEF),OR${PKGNAME}_dict.o,)
+DICTPCMFILE  := $(if $(LINKDEF),OR${PKGNAME}_dict_rdict.pcm)
 
 all: $(SHLIB) $(APPS)
 
@@ -68,6 +69,8 @@ clean:
 $(DICTCFILES) : $(DICTHFILES) $(LINKDEF) 
 	@echo "$(OUTPREFIX)Running rootcint .... $(notdir $(LINKDEF))"
 	$(VERBOSE)$(ROOTCINT) -f $@ -c $(CXXFLAGS) $(ORFLAGS) -p $(DICTHFILES) $(LINKDEF)
+#if using ROOT 6, a pcm file is created which must be linked in the lib directory
+	@test $(DICTPCMFILE) && ln -sf $(PWD)/$(DICTPCMFILE) ../lib
 
 $(AUTOLINKDEF): $(LINKDEFIN) $(DICTHFILES) 
 	@echo "$(OUTPREFIX)Auto-making Linkdef . $(@F)"
