@@ -63,9 +63,12 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
     //virtual double GetRisingEdgeWFSamplingFrequency(); // in GHz. 
 
     // Other available digitizer information
-    virtual inline UShort_t GetBoardSerialNumber(size_t iEvent) 
-      { return (EP(iEvent)[1] & 0xfff0) >> 4; }
-
+    virtual inline UShort_t GetBoardSerialNumber() 
+      { return (fDataRecord[1] & 0xffff); }
+    virtual inline Bool_t IsFifoAlmostFull()
+      { return fDataRecord[1] & 0x80000000; }
+    virtual inline Bool_t IsFifoHalfFull()
+      { return fDataRecord[1] & 0x40000000; }
 
     // Functions related to setting / accessing card parameters)
     virtual void SetDecoderDictionary(const ORDecoderDictionary* dict);
