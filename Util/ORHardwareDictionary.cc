@@ -61,8 +61,8 @@ bool ORHardwareDictionary::LoadCratesAndCards(const ORDictionary* dict)
       const ORDictValueA* crateCardArray = dynamic_cast<const ORDictValueA*>(
         oneCrate->LookUp("Cards")); 
       if (!crateCardArray) {
-        ORLog(kError) << "Error finding array Cards" << std::endl; 
-        return false;
+        ORLog(kWarning) << "Error finding array Cards for crate " << crateNum->GetI() << std::endl; 
+        continue;
       } 
       for (size_t i=0;i<crateCardArray->GetNValues();i++) {
         const ORDictionary* cardDict = dynamic_cast<const ORDictionary*>(crateCardArray->At(i));
