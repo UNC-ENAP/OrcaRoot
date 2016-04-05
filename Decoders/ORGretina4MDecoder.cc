@@ -7,6 +7,8 @@
 using namespace std;
 
 const UInt_t ORGretina4MDecoder::kDownSampleFactor[] = {1, 2, 4, 8, 16};
+const UInt_t ORGretina4MDecoder::kPSFactor[] = {2, 4, 8, 10};
+const UInt_t ORGretina4MDecoder::kPSDivider[] = {1, 2, 4, 8};
 
 ORGretina4MDecoder::ORGretina4MDecoder() 
 {
@@ -55,8 +57,15 @@ UInt_t ORGretina4MDecoder::GetParameter(UInt_t par, UInt_t ccc)
   case kIntTime: key = "Integration Time"; break;
   case kDownSample: key = "Down Sample"; break;
   case kChPreSum: key = "Chpsrt"; break;
+  case kChPreSumDiv: key = "Chpsdv"; break;
   case kEnabled: key = "Enabled"; break;
   case kMRPreSum: key = "Mrpsrt"; break;
+  case kMRPreSumDiv: key = "Mrpsdv"; break;
+  case kPSEnabled: key = "PreSum Enabled"; break;
+  case kPreRECnt: key = "Prerecnt"; break;
+  case kPostRECnt: key = "Postrecnt"; break;
+  case kFTCnt: key = "FtCnt"; break;
+    
   default:
     ORLog(kError) << "Unknown card parameter " << par << endl;
     return (UInt_t) -1;

@@ -25,12 +25,20 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
     };
     enum EChanPars { 
       kChPreSum = kNCardPars, // channel presum (n samples)
+      kChPreSumDiv, // channel presum divider
       kMRPreSum, // additional presum for multi-rate mode (i.e. for baseline, flattop)
+      kMRPreSumDiv, // presum divider for multi-rate mode
       kEnabled,
+      kPSEnabled, 
+      kPreRECnt, // number of samples before rising edge, after baseline
+      kPostRECnt, // number of samples after rising edge, before flat top
+      kFTCnt, // number of pre-summed flat top samples
       kNPars, 
       kNChanPars = kNPars-kNCardPars
     };
     static const UInt_t kDownSampleFactor[];
+    static const UInt_t kPSFactor[];
+    static const UInt_t kPSDivider[];
 
     ORGretina4MDecoder();
     virtual ~ORGretina4MDecoder() {}
@@ -78,6 +86,16 @@ class ORGretina4MDecoder : public ORVDigitizerDecoder
       { return GetCardParameter(kIntTime, CrateOf(), CardOf()); }
     virtual inline UInt_t GetDownSampleFactor()
       { return kDownSampleFactor[GetCardParameter(kDownSample, CrateOf(), CardOf())]; }
+    virtual inline UInt_t GetMRPreSum(size_t iEvent)
+      { return kPSFactor[GetChannelParameter(kMRPreSum, CrateOf(), CardOf(), GetEventChannel(iEvent))]; }
+    virtual inline UInt_t GetMRPreSumDiv(size_t iEvent)
+      { return kPSDivider[GetChannelParameter(kMRPreSumDiv, CrateOf(), CardOf(), GetEventChannel(iEvent))]; }
+    virtual inline UInt_t GetPreRECnt(size_t iEvent)
+      { return GetChannelParameter(kPreRECnt, CrateOf(), CardOf(), GetEventChannel(iEvent)); }
+    virtual inline UInt_t GetPostRECnt(size_t iEvent)
+      { return GetChannelParameter(kPostRECnt, CrateOf(), CardOf(), GetEventChannel(iEvent)); }
+    virtual inline UInt_t GetFTCnt(size_t iEvent)
+      { return GetChannelParameter(kFTCnt, CrateOf(), CardOf(), GetEventChannel(iEvent)); }
 
   protected:
     // fast pointer to event data
