@@ -108,13 +108,13 @@ std::string ORVDataDecoder::GetStringValueFromKeyArray(std::string key,
     return "";
   }
   if (index >= array->GetNValues()) {
-    ORLog(kWarning) << index << " out of range." << std::endl; 
+    ORLog(kWarning) << "index " << index << " out of range for crate " << crate << ", card " << card << ", key " << key << std::endl; 
     return "";
   } 
   const ORDictValueS* val = 
     dynamic_cast<const ORDictValueS*>(array->At(index));
   if (!val) {
-    ORLog(kWarning) << "Incorrect type!" << std::endl;
+    ORLog(kWarning) << key << " for crate " << crate << ", card " << card << ", index " << index << " is not a string!" << std::endl;
     return "";
   }
   return val->GetS();
@@ -130,13 +130,13 @@ Int_t ORVDataDecoder::GetIntValueFromKeyArray(std::string key,
     return 0;
   }
   if (index >= array->GetNValues()) {
-    ORLog(kWarning) << index << " out of range." << std::endl; 
+    ORLog(kWarning) << "index " << index << " out of range for crate " << crate << ", card " << card << ", key " << key << std::endl; 
     return 0;
   } 
   const ORDictValueI* val = 
     dynamic_cast<const ORDictValueI*>(array->At(index));
   if (!val) {
-    ORLog(kWarning) << "Incorrect type!" << std::endl;
+    ORLog(kWarning) << key << " for crate " << crate << ", card " << card << ", index " << index << " is not an int!" << std::endl;
     return 0;
   }
   return val->GetI();
@@ -152,13 +152,13 @@ Double_t ORVDataDecoder::GetRealValueFromKeyArray(std::string key,
     return 0.;
   }
   if (index >= array->GetNValues()) {
-    ORLog(kWarning) << index << " out of range." << std::endl; 
+    ORLog(kWarning) << "index " << index << " out of range for crate " << crate << ", card " << card << ", key " << key << std::endl; 
     return 0.;
   } 
   const ORDictValueR* val = 
     dynamic_cast<const ORDictValueR*>(array->At(index));
   if (!val) {
-    ORLog(kWarning) << "Incorrect type!" << std::endl;
+    ORLog(kWarning) << key << " for crate " << crate << ", card " << card << ", index " << index << " is not a float!" << std::endl;
     return 0.;
   }
   return val->GetR();
@@ -174,13 +174,13 @@ Bool_t ORVDataDecoder::GetBoolValueFromKeyArray(std::string key,
     return false;
   }
   if (index >= array->GetNValues()) {
-    ORLog(kWarning) << index << " out of range." << std::endl; 
+    ORLog(kWarning) << "index " << index << " out of range for crate " << crate << ", card " << card << ", key " << key << std::endl; 
     return false;
   } 
   const ORDictValueB* val = 
     dynamic_cast<const ORDictValueB*>(array->At(index));
   if (!val) {
-    ORLog(kWarning) << "Incorrect type!" << std::endl;
+    ORLog(kWarning) << key << " for crate " << crate << ", card " << card << ", index " << index << " is not a bool!" << std::endl;
     return false;
   }
   return val->GetB();

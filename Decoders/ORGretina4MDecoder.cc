@@ -77,7 +77,7 @@ UInt_t ORGretina4MDecoder::GetParameter(UInt_t par, UInt_t ccc)
   UInt_t ch = (ccc & 0xf);
   UInt_t value = 0;
   if(par < kNCardPars) value = GetIntValueFromKey(key, cr, ca);
-  else value = dynamic_cast<const ORDictValueI*>(GetArrayFromKey(key, cr, ca)->At(ch))->GetI();
+  else value = GetIntValueFromKeyArray(key, cr, ca, ch);
 
   // cache locally and return
   fCardPars[par][ccc] = value;
