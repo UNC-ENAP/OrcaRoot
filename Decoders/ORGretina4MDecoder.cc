@@ -77,8 +77,12 @@ UInt_t ORGretina4MDecoder::GetParameter(UInt_t par, UInt_t ccc)
   UInt_t ch = (ccc & 0xf);
   UInt_t value = 0;
   if(par < kNCardPars) value = GetIntValueFromKey(key, cr, ca);
-  else value = GetIntValueFromKeyArray(key, cr, ca, ch);
-
+  else {
+    const ORDictValueA* arr = GetArrayFromKey(key, cr, ca);
+    if(!arr || ch > arr->GetNValues() || !arr->At(ch)->IsA(ORVDictValue::kInt)) value = 0;
+    else value = static_cast<const ORDictValueI*>(arr->At(ch))->GetI();
+  }
+  
   // cache locally and return
   fCardPars[par][ccc] = value;
   return value;
