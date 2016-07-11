@@ -91,6 +91,10 @@
 
   #include "ORKatrinV4FLTHitRateDecoder.hh"
   #include "ORKatrinV4FLTHitRateTreeWriter.hh"
+  
+  //this part is for the IPE V4 Electronics bipolar mode+SLT Fifo readout -tb- 2016-07-08
+  #include "ORKatrinV4SLTEnergyDecoder.hh"
+  #include "ORKatrinV4SLTEnergyTreeWriter.hh"
 
 
   //ADDITION FOR KATRIN - Stop
@@ -296,6 +300,9 @@ int main(int argc, char** argv)
   
 	ORKatrinV4FLTEnergyTreeWriter katrinV4FLTEnergyTreeWriter("katrinV4EnergyTree");
 	dataProcManager.AddProcessor(&katrinV4FLTEnergyTreeWriter);
+     
+     ORKatrinV4SLTEnergyTreeWriter katrinV4SLTEnergyTreeWriter("katrinV4EnergyTreeThruSLT"); //new 2016-07-08 for bipolar mode -tb-
+	dataProcManager.AddProcessor(&katrinV4SLTEnergyTreeWriter);
 	
 	ORKatrinV4FLTWaveformTreeWriter katrinV4FLTWaveformTreeWriter("katrinV4WaveformTree");
 	dataProcManager.AddProcessor(&katrinV4FLTWaveformTreeWriter);
