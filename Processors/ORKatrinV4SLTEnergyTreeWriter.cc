@@ -12,7 +12,7 @@ ORVTreeWriter(new ORKatrinV4SLTEnergyDecoder, treeName)
   fEventDecoder = dynamic_cast<ORKatrinV4SLTEnergyDecoder*>(fDataDecoder);
   Clear();// ??? why is this needed, what is it doing ??? -tb-
   SetDoNotAutoFillTree();//we have multiple events in one data record -> split into one lbranch leaf per event -> call tree->Fill() local -tb-
-
+  fUniqueTree = true;
 }
 
 ORKatrinV4SLTEnergyTreeWriter::~ORKatrinV4SLTEnergyTreeWriter()
@@ -25,22 +25,24 @@ ORKatrinV4SLTEnergyTreeWriter::~ORKatrinV4SLTEnergyTreeWriter()
   */ //-tb- 2008-02-12
 ORDataProcessor::EReturnCode ORKatrinV4SLTEnergyTreeWriter::InitializeBranches()
 {
+  fTree->Branch("energy_adc", &fEnergy, "energy_adc/i");
   fTree->Branch("eventSec", &fSec, "eventSec/i");
   fTree->Branch("eventSubSec", &fSubSec, "eventSubSec/i");
+  fTree->Branch("channelMap", &fChannelMap, "channelMap/i");
+  
   fTree->Branch("crate", &fCrate, "crate/s");
   fTree->Branch("card", &fCard, "card/s");
   fTree->Branch("channel", &fChannel, "channel/s");
   fTree->Branch("multiplicity", &fMultiplicity, "multiplicity/s");
-  fTree->Branch("channelMap", &fChannelMap, "channelMap/i");
-  fTree->Branch("eventID", &fEventID, "eventID/i");
-  fTree->Branch("energy_adc", &fEnergy, "energy_adc/i");
-  fTree->Branch("PeakADC", &fPeakADC, "PeakADC/S");
-  fTree->Branch("ValleyADC", &fValleyADC, "ValleyADC/S");
-  fTree->Branch("PeakPos", &fPeakPos, "PeakPos/S");
-  fTree->Branch("ValleyPos", &fValleyPos, "ValleyPos/S");
-  fTree->Branch("isFLTthruSLT", &isFLTthruSLT, "isFLTthruSLT/O");
+  fTree->Branch("fifoEventID", &fEventID, "fifoEventID/i");
+  fTree->Branch("PeakADC", &fPeakADC, "PeakADC/i");
+  fTree->Branch("ValleyADC", &fValleyADC, "ValleyADC/i");
+  fTree->Branch("PeakPos", &fPeakPos, "PeakPos/i");
+  fTree->Branch("ValleyPos", &fValleyPos, "ValleyPos/i");
+  //fTree->Branch("isFLTthruSLT", &isFLTthruSLT, "isFLTthruSLT/O");
+  fTree->Branch("isBipolarMode", &isBipolarMode, "isBipolarMode/b");
 
-  fTree->Branch("eventFlags", &fEventFlags, "eventFlags/i");
+  //fTree->Branch("eventFlags", &fEventFlags, "eventFlags/i");
   fTree->Branch("eventInfo", &fEventInfo, "eventInfo/i");
   //fTree->Branch("waveform", fWaveform, "waveform[wfLength]/s");
   return kSuccess;
@@ -75,7 +77,9 @@ ORDataProcessor::EReturnCode ORKatrinV4SLTEnergyTreeWriter::ProcessMyDataRecord(
       fPeakPos = fEventDecoder->GetPeakPos(i);  
       fValleyPos = fEventDecoder->GetValleyPos(i); 
       
-      isFLTthruSLT = true;
+      //isFLTthruSLT = true;
+      isBipolarMode = fEventDecoder->GetIsBipolarEvent(i);
+      
       
       fEventFlags = fEventDecoder->GetEventFlags(i);
       fEventInfo = fEventDecoder->GetEventInfo(i);

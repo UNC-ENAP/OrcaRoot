@@ -29,12 +29,13 @@ class ORKatrinV4SLTEnergyTreeWriter : public ORVTreeWriter
     UInt_t fSec, fSubSec;
     UInt_t fChannelMap;
     UShort_t fCrate, fCard, fChannel, fMultiplicity;
-    Short_t fPeakADC, fValleyADC,  fPeakPos, fValleyPos;
+    UInt_t fPeakADC, fValleyADC,  fPeakPos, fValleyPos;
     //UShort_t fWaveform[kMaxWFLength];
     UInt_t fWaveformLength;
     UInt_t fEnergy;
     UInt_t fEventID, fEventFlags, fEventInfo;
-    Bool_t isFLTthruSLT, isBipolar;
+    //Bool_t isFLTthruSLT;
+    UChar_t isBipolarMode;
     //Bool_t saveOnlyNonemptyTrees; //!< flag to skip writing empty trees -tb- 2008-02-19 - MOVED TO BASE CLASS -tb-
 };
 

@@ -42,12 +42,12 @@ public:
     virtual inline UShort_t GetChannel(size_t iEvent);
     virtual inline UShort_t GetMultiplicity(size_t iEvent);
     virtual inline UInt_t GetEventID(size_t iEvent);
-    virtual inline Short_t GetPeakADC(size_t iEvent);
-    virtual inline Short_t GetPeakPos(size_t iEvent);
-    virtual inline Short_t GetValleyADC(size_t iEvent);
-    virtual inline Short_t GetValleyPos(size_t iEvent);
+    virtual inline UInt_t GetPeakADC(size_t iEvent);
+    virtual inline UInt_t GetPeakPos(size_t iEvent);
+    virtual inline UInt_t GetValleyADC(size_t iEvent);
+    virtual inline UInt_t GetValleyPos(size_t iEvent);
     
-    virtual inline UInt_t GetIsBipolarEvent(size_t iEvent);
+    virtual inline UChar_t GetIsBipolarEvent(size_t iEvent);
     
 //these are obsolete: -tb-
 virtual inline UInt_t GetChannelMap(size_t iEvent);
@@ -135,33 +135,33 @@ inline UInt_t ORKatrinV4SLTEnergyDecoder::GetEventID(size_t iEvent)
 	return fEventRecord[2] & 0x3fff;
 }
 
-inline Short_t ORKatrinV4SLTEnergyDecoder::GetPeakADC(size_t iEvent)
+inline UInt_t ORKatrinV4SLTEnergyDecoder::GetPeakADC(size_t iEvent)
 {
     UInt_t* fEventRecord = GetEventPointer(iEvent);
 	return (fEventRecord[3]  & 0x7ff);// & 0xfff however for unknown reasons (FPGA code) bit11 is always 1 -tb-
 }
 
-inline Short_t ORKatrinV4SLTEnergyDecoder::GetPeakPos(size_t iEvent)
+inline UInt_t ORKatrinV4SLTEnergyDecoder::GetPeakPos(size_t iEvent)
 {
     UInt_t* fEventRecord = GetEventPointer(iEvent);
 	return (fEventRecord[3] >> 16) & 0x1ff;
 }
 
-inline Short_t ORKatrinV4SLTEnergyDecoder::GetValleyADC(size_t iEvent)
+inline UInt_t ORKatrinV4SLTEnergyDecoder::GetValleyADC(size_t iEvent)
 {
     UInt_t* fEventRecord = GetEventPointer(iEvent);
-    Short_t valleyADC = (4096 - fEventRecord[4]  & 0xfff);
+    Short_t valleyADC = (4096 - (fEventRecord[4]  & 0xfff));
 	return (valleyADC);// 
 }
 
-inline Short_t ORKatrinV4SLTEnergyDecoder::GetValleyPos(size_t iEvent)
+inline UInt_t ORKatrinV4SLTEnergyDecoder::GetValleyPos(size_t iEvent)
 {
     UInt_t* fEventRecord = GetEventPointer(iEvent);
 	return (fEventRecord[4] >> 16) & 0xfff;
 }
 
 
-inline UInt_t ORKatrinV4SLTEnergyDecoder::GetIsBipolarEvent(size_t iEvent)
+inline UChar_t ORKatrinV4SLTEnergyDecoder::GetIsBipolarEvent(size_t iEvent)
 {
     if(GetPeakADC(iEvent)==0 && GetValleyADC(iEvent)==0 ) return 0;
 	else return 0x1;

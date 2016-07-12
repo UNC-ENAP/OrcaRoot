@@ -301,7 +301,7 @@ int main(int argc, char** argv)
 	ORKatrinV4FLTEnergyTreeWriter katrinV4FLTEnergyTreeWriter("katrinV4EnergyTree");
 	dataProcManager.AddProcessor(&katrinV4FLTEnergyTreeWriter);
      
-     ORKatrinV4SLTEnergyTreeWriter katrinV4SLTEnergyTreeWriter("katrinV4EnergyTreeThruSLT"); //new 2016-07-08 for bipolar mode -tb-
+     ORKatrinV4SLTEnergyTreeWriter katrinV4SLTEnergyTreeWriter("katrinV4SLTEnergyTree"); //new 2016-07-08 for bipolar mode -tb-
 	dataProcManager.AddProcessor(&katrinV4SLTEnergyTreeWriter);
 	
 	ORKatrinV4FLTWaveformTreeWriter katrinV4FLTWaveformTreeWriter("katrinV4WaveformTree");
