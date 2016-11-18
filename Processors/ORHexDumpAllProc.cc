@@ -35,10 +35,9 @@ ORHexDumpAllProc::EReturnCode ORHexDumpAllProc::ProcessDataRecord(UInt_t* record
     fRunContext->SetRecordSwapped();
   }
 
-  static map<int, string> deviceNames = MakeIDMap();
-  if(deviceNames.size() == 0) return kAlarm;
+  if(fIDMap.size() == 0) return kAlarm;
   UInt_t dataID = fDataDecoder->DataIdOf(record);
-  string deviceName = deviceNames[dataID];
+  string deviceName = fIDMap[dataID];
   if(deviceName == "") deviceName = "UNKNOWN";
 
   if(!fDeviceList.empty() && !fDeviceList.count(deviceName)) return kSuccess;
@@ -50,13 +49,13 @@ ORHexDumpAllProc::EReturnCode ORHexDumpAllProc::ProcessDataRecord(UInt_t* record
   return kSuccess;
 }
 
-map<int, string> ORHexDumpAllProc::MakeIDMap()
+ORDataProcessor::EReturnCode ORHexDumpAllProc::StartRun()
 {
-  map<int, string> deviceNames;
+  fIDMap.clear();
   ORDictionary* dataDescDict = (ORDictionary*) fRunContext->GetHeader()->LookUp("dataDescription");
   if(dataDescDict == NULL) {
     ORLog(kError) << "no dataDescDescription?" << endl;
-    return deviceNames;
+    return kAlarm;
   }
   ORDictionary::DictMap dataDescMap = dataDescDict->GetDictMap();
   for(ORDictionary::DictMap::iterator i = dataDescMap.begin(); i != dataDescMap.end(); i++) {
@@ -68,11 +67,11 @@ map<int, string> ORHexDumpAllProc::MakeIDMap()
       if(dataIDDVI == NULL) {
         ORLog(kError) << "no dataId for " << deviceName << ":" << j->first << endl;
         deviceName.clear();
-        return deviceNames;
+        return kAlarm;
       }
-      deviceNames[dataIDDVI->GetI()] = deviceName + ":" + j->first;
+      fIDMap[dataIDDVI->GetI()] = deviceName + ":" + j->first;
     }
   }
-  return deviceNames;
+  return kSuccess;
 }
 

@@ -14,6 +14,7 @@ class ORHexDumpAllProc : public ORDataProcessor
     virtual ~ORHexDumpAllProc();
 
     virtual void SetDataId() {}
+    EReturnCode StartRun();
     EReturnCode ProcessDataRecord(UInt_t* record);
     virtual void SetLimits(Int_t begin, Int_t end=-1) {
       fBegin=begin;
@@ -33,9 +34,6 @@ class ORHexDumpAllProc : public ORDataProcessor
 
     virtual void AddDevice(std::string& device) { fDeviceList.insert(device); }
 
-  private:
-    std::map<int, std::string> MakeIDMap();
-
   protected:
     bool fCheckLimits;
     Int_t fBegin;
@@ -43,6 +41,7 @@ class ORHexDumpAllProc : public ORDataProcessor
     UInt_t fLineLength;
     std::set<Int_t> fPacketList;
     std::set<std::string> fDeviceList;
+    std::map<int, std::string> fIDMap;
 };
 
 #endif
