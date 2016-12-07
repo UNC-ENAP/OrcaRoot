@@ -70,6 +70,10 @@ class ORDictionary : public ORVDictValue
     typedef std::map<std::string, ORVDictValue*> DictMap;
     virtual const DictMap& GetDictMap() const { return fDictMap; }
     virtual DictMap& GetDictMap() { return fDictMap; }
+    virtual DictMap::iterator begin() { return fDictMap.begin(); }
+    virtual DictMap::const_iterator begin() const { return fDictMap.begin(); }
+    virtual DictMap::iterator end() { return fDictMap.end(); }
+    virtual DictMap::const_iterator end() const { return fDictMap.end(); }    
 
   protected:
     std::string fName;
@@ -165,9 +169,19 @@ class ORDictValueA : public ORVDictValue
     virtual const ORVDictValue* At(int i) const { return fDictVals[i]; }
     virtual ORVDictValue* At(int i) { return fDictVals[i]; }
 
+    // The following functions are useful for iterating over the contents of
+    // the array:
+    typedef std::vector<ORVDictValue*> DictArray;
+    virtual const DictArray& GetDictMap() const { return fDictVals; }
+    virtual DictArray& GetDictMap() { return fDictVals; }
+    virtual DictArray::iterator begin() { return fDictVals.begin(); }
+    virtual DictArray::const_iterator begin() const { return fDictVals.begin(); }
+    virtual DictArray::iterator end() { return fDictVals.end(); }
+    virtual DictArray::const_iterator end() const { return fDictVals.end(); }    
+
   protected:
     std::string fName;
-    std::vector<ORVDictValue*> fDictVals;
+    DictArray fDictVals;
 };
 
 

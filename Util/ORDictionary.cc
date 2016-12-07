@@ -10,7 +10,7 @@ ORDictionary::ORDictionary(const ORDictionary& dict) : ORVDictValue(dict)
   /* Now the hard part, copying the dictionary map correctly calling 
      all the copy constructors. */ 
   DictMap::const_iterator dictIter;
-  for (dictIter = dict.fDictMap.begin();dictIter!=dict.fDictMap.end();dictIter++) {
+  for (dictIter = dict.begin();dictIter!=dict.end();dictIter++) {
     EValType type = dictIter->second->GetValueType(); 
     ORVDictValue* insertDictValue = NULL;
     switch (type) {
@@ -44,7 +44,7 @@ ORDictionary::ORDictionary(const ORDictionary& dict) : ORVDictValue(dict)
 ORDictionary::~ORDictionary()
 {
   DictMap::iterator i;
-  for (i = fDictMap.begin(); i != fDictMap.end(); i++) {
+  for (i = begin(); i != end(); i++) {
     delete i->second;
   }
 }
