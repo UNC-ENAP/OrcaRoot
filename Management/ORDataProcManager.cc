@@ -136,6 +136,7 @@ ORDataProcManager::EReturnCode ORDataProcManager::ProcessRun()
 
     if (fRunContext->GetState() <= ORRunContext::kStarting) {
       // Starting a run
+      fRunContext->fPacketNumber = 0;
       retCode = StartRun();
       if (retCode >= kFailure) KillRun(); // but keep processing: skips to next run
       if (retCode >= kAlarm) return kAlarm;
