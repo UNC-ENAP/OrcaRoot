@@ -103,6 +103,13 @@ const ORVDictValue* ORDictionary::LookUp(std::string key, char delimiter) const
   }
 }
 
+void ORDictionary::LoadEntry(std::string key, ORVDictValue* value)
+{
+  ORVDictValue*& entry = fDictMap[key];
+  if(entry!=NULL) delete entry;
+  entry = value;
+}
+
 std::string ORDictValueA::GetStringOfValue() const
 {
   std::string o("{");

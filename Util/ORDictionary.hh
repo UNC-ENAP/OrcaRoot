@@ -60,7 +60,7 @@ class ORDictionary : public ORVDictValue
     virtual const std::string& GetName() const { return fName; }
     virtual const ORVDictValue* LookUp(std::string key, char delimiter = ':') const;
     virtual ORVDictValue* LookUp(std::string key, char delimiter = ':');
-    virtual void LoadEntry(std::string key, ORVDictValue* value) { fDictMap[key] = value; }
+    virtual void LoadEntry(std::string key, ORVDictValue* value);
     virtual void SetName(std::string name) { fName = name; }
     virtual std::string GetStringOfValue() const {return "";}
     virtual size_t GetNValues() const {return fDictMap.size();}
