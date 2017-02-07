@@ -11,25 +11,13 @@ ORDataProcManager::ORDataProcManager(ORVReader* reader, ORRunDataProcessor* runD
 { 
   // the optional runDataProc argument allows the user to pass in an
   // overloaded ORRunDataProcessor
-  if (runDataProc != NULL) {
-    fRunDataProcessor = runDataProc;
-    fIOwnRunDataProcessor = false;
-  }
-  else {
-    fRunDataProcessor = new ORRunDataProcessor;
-    fIOwnRunDataProcessor = true;
-  }
+  fIOwnRunDataProcessor = (runDataProc==NULL);
+  fRunDataProcessor = (fIOwnRunDataProcessor ? new ORRunDataProcessor : runDataProc);
 
   // the optional headerProc argument allows the user to pass in a header
   // in case he/she wants to change it after reading it in
-  if (headerProc != NULL) {
-    fHeaderProcessor = headerProc;
-    fIOwnHeaderProcessor = false;
-  }
-  else {
-    fHeaderProcessor = new ORHeaderProcessor;
-    fIOwnRunDataProcessor = true;
-  }
+  fIOwnHeaderProcessor = (headerProc==NULL);
+  fHeaderProcessor = (fIOwnHeaderProcessor ? new ORHeaderProcessor : headerProc);
 
   SetReader(reader);
   SetRunContext(new ORRunContext);

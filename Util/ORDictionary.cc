@@ -46,6 +46,7 @@ ORDictionary::~ORDictionary()
   DictMap::iterator i;
   for (i = begin(); i != end(); i++) {
     delete i->second;
+    i->second = NULL;
   }
 }
 
@@ -171,6 +172,9 @@ ORDictValueA::ORDictValueA(const ORDictValueA& dictA) : ORVDictValue(dictA)
 
 ORDictValueA::~ORDictValueA()
 {
-  for (unsigned i=0; i < fDictVals.size(); i++) delete fDictVals[i];
+  for (unsigned i=0; i < fDictVals.size(); i++) {
+    delete fDictVals[i];
+    fDictVals[i] = 0;
+  }
 }
 
