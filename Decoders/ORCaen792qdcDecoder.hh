@@ -61,7 +61,7 @@ class ORCaen792qdcDecoder : public ORVBasicTreeDecoder
       { return ((record[iWord] & 0x07000000) >> 24) == 4; }
 
     std::vector<UInt_t*> fLocPtrs;
-    UInt_t fLastEventCount;
+    UInt_t fLastCardIDWord, fLastEventCount;
 };
 
 #endif

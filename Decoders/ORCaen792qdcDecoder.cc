@@ -8,13 +8,15 @@ using namespace std;
 
 ORCaen792qdcDecoder::ORCaen792qdcDecoder()
 {
+  fLastCardIDWord = -1;
   fLastEventCount = -1;
 }
 
 size_t ORCaen792qdcDecoder::NValuesOf(UInt_t* record)
 {
-  if(EventCountOf(record) != fLastEventCount) {
+  if(record[1] != fLastCardIDWord || EventCountOf(record) != fLastEventCount) {
     LoadLocPtrs(record);
+    fLastCardIDWord = record[1];
     fLastEventCount = EventCountOf(record);
   }
   return fLocPtrs.size();
