@@ -14,6 +14,7 @@ ORDataProcessor(decoder)
   fTreeName = treeName;
   if(fTreeName == "") fTreeName = "ORTree";
   fTree = NULL;
+  fBranch = NULL;
   fThisProcessorAutoFillsTree = true;
   fUniqueTree = false;
   fFillPeriod = 1;

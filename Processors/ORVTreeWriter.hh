@@ -100,6 +100,7 @@ class ORVTreeWriter : public ORDataProcessor
   protected:
     std::string fTreeName;
     TTree* fTree;
+    TBranch* fBranch;
     bool fThisProcessorAutoFillsTree;
     bool fUniqueTree;
     int fFillPeriod;
