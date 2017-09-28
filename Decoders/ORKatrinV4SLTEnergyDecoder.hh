@@ -37,6 +37,7 @@ public:
     //Functions that return data from buffer header:
     virtual inline UInt_t GetSec(size_t iEvent);
     virtual inline UInt_t GetSubSec(size_t iEvent);
+    virtual inline UInt_t GetTimePrecision(size_t iEvent);
     virtual inline UInt_t GetEnergy(size_t iEvent);
     virtual inline UShort_t GetCard(size_t iEvent);
     virtual inline UShort_t GetChannel(size_t iEvent);
@@ -102,6 +103,12 @@ inline UInt_t ORKatrinV4SLTEnergyDecoder::GetSubSec(size_t iEvent)
 {
     UInt_t* fEventRecord = GetEventPointer(iEvent);
 	return (fEventRecord[0]  & 0x0ffffff8) >> 3;
+}
+
+inline UInt_t ORKatrinV4SLTEnergyDecoder::GetTimePrecision(size_t iEvent)
+{
+    UInt_t* fEventRecord = GetEventPointer(iEvent);
+    return (fEventRecord[0] >> 28) & 0x1;
 }
 
 inline UInt_t ORKatrinV4SLTEnergyDecoder::GetEnergy(size_t iEvent)
