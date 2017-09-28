@@ -49,9 +49,9 @@ public:
     
     virtual inline UChar_t GetIsBipolarEvent(size_t iEvent);
     
-//these are obsolete: -tb-
-virtual inline UInt_t GetChannelMap(size_t iEvent);
-virtual inline UInt_t GetEventInfo(size_t iEvent);
+    //these are obsolete: -tb-
+    virtual inline UInt_t GetChannelMap(size_t iEvent);
+    virtual inline UInt_t GetEventInfo(size_t iEvent);
     virtual inline UInt_t GetEventFlags(size_t event=0);
 	
     // Data Blocks Functions
