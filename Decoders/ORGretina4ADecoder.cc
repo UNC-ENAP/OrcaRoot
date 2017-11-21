@@ -20,9 +20,8 @@ bool ORGretina4ADecoder::SetDataRecord(UInt_t* dataRecord)
   while(pos < LengthOf(fDataRecord)) {
     UInt_t* ptr = fDataRecord+pos;
     fEvPtrs.push_back(ptr);
-    fWFPtrs.push_back((Short_t*)(ptr + GetHeaderLength(ptr)));
+    fWFPtrs.push_back((Short_t*)(ptr + size_t(GetHeaderLength(ptr))));
     pos += GetPacketLength(ptr);
-    ORLog(kRoutine) << GetHeaderLength(ptr) << ' ' << GetPacketLength(ptr) << ' ' << pos << endl;
   }
 
   if(pos != LengthOf(fDataRecord)) {
