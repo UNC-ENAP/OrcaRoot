@@ -12,6 +12,12 @@
 
 class ORGretina4ADecoder : public ORVDigitizerDecoder {
 public:
+  enum EParameters {
+    kDSFact, // channel decimation factor index
+    kNPars
+  };
+  
+public:
   ORGretina4ADecoder() {}
   virtual ~ORGretina4ADecoder() {}
 
@@ -103,9 +109,16 @@ public:
   virtual inline Short_t GetPeakSample(size_t iEvent)
   { return Short_t(fEvPtrs[iEvent][13] & 0x3fff) - 0x2000; }
   
+  // Functions related to setting / accessing card parameters
+  virtual void SetDecoderDictionary(const ORDecoderDictionary* dict);
+  virtual UInt_t GetParameter(EParameters par, UInt_t crate, UInt_t card, UInt_t channel);
+  virtual UInt_t GetDSFactor(size_t iEvent)
+  { return 0x1 << GetParameter(kDSFact, CrateOf(), CardOf(), GetEventChannel(iEvent)); }
+
 protected:
   std::vector<UInt_t*> fEvPtrs;
   std::vector<Short_t*> fWFPtrs;
+  std::map<UInt_t, UInt_t> fCardPars[kNPars]; //cache parameters that are searched in the XML header
 };
 
 #endif
