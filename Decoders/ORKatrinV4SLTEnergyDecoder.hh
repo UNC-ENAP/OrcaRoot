@@ -29,7 +29,7 @@ public:
 		kNumFLTChannels = 24};
     size_t fEventNum;
     
-    virtual std::string GetDataObjectPath() { return "ORKatrinV4SLTModel:KatrinV4SLTEnergy"; }  
+    virtual std::string GetDataObjectPath() { return "ORKatrinV4SLTModel:KatrinV4SLTEnergy"; }
     //!< KatrinV4SLTEnergy is the key in ORKatrinV4SLTModel.m in - (NSDictionary*) ORKatrinV4SLTModel::dataRecordDescription -tb- 2016-07-08 
 	
     virtual bool SetDataRecord(UInt_t* record);
@@ -77,6 +77,7 @@ public:
     //Error checking:
     virtual bool IsValid();
     virtual void DumpBufferHeader();
+    virtual UInt_t IsFormatCorrect();
 	
     //debugging:
     void Dump(UInt_t* dataRecord);

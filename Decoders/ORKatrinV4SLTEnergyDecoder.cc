@@ -52,8 +52,28 @@ void ORKatrinV4SLTEnergyDecoder::DumpBufferHeader()
   }
 }
 
+UInt_t ORKatrinV4SLTEnergyDecoder::IsFormatCorrect()
+{
+  UInt_t fErrors;
+  UInt_t* fEventRecord;
+  
+  fErrors = 0;
+  for (size_t i = 0; i < GetEventNum(); i++) {
+     fEventRecord = GetEventPointer(i);
+  
+     if (!((fEventRecord[0] >> 29 == 1)
+        && (fEventRecord[1] >> 29 == 2)
+        && (fEventRecord[2] >> 29 == 3)
+        && (fEventRecord[3] >> 29 == 4)
+        && (fEventRecord[4] >> 29 == 5)
+        && (fEventRecord[5] >> 29 == 6))) {
+       fErrors++;
+     }
+  }
+  return(fErrors);
+}
 
-void ORKatrinV4SLTEnergyDecoder::Dump(UInt_t* dataRecord) //debugging 
+void ORKatrinV4SLTEnergyDecoder::Dump(UInt_t* dataRecord) //debugging
 {
   ORLog(kDebug) << std::endl << std::endl << "ORKatrinV4SLTEnergyDecoder::Dump():" << std::endl ;
   if(!SetDataRecord(dataRecord)) return; 
