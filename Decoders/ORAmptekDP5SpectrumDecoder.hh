@@ -31,6 +31,7 @@ public:
 		kNumFLTChannels = 24};
     size_t fSpectrumLength;
     size_t fWaveformLength;
+    UChar_t fStatusData[64];
     
     virtual std::string GetDataObjectPath() { return "ORAmptekDP5Model:AmptekDP5Spectrum"; }  
     //!< AmptekDP5Spectrum is the key in ORAmptekDP5Model.m in - (NSDictionary*) ORAmptekDP5Model::dataRecordDescription -tb- 2015-04-12 
@@ -59,6 +60,11 @@ public:
     virtual inline UInt_t HasStatus();
     virtual inline UInt_t GetAcqTime();
     virtual inline UInt_t GetRealTime();
+    
+    //Status Functions
+    virtual inline Int_t GetBoardTemperature();    //added by N. Haußmann
+    virtual inline UInt_t GetFastChannelCounter();         //added by N. Haußmann
+    virtual inline UInt_t GetSlowChannelCounter();     //added by N. Haußmann
     
     // Waveform Functions
     virtual inline size_t GetWaveformLen(); 
@@ -122,7 +128,9 @@ inline UInt_t ORAmptekDP5SpectrumDecoder::HasStatus()
 
 inline UInt_t ORAmptekDP5SpectrumDecoder::GetAcqTime() 
 {
-	return (fDataRecord[6]);
+    const UInt_t accTime1msInterval =  fDataRecord[6] & 0xFF;           //edited  by N. Haußmann based on DP5 Programmer’s Guide Rev 1B page 70
+    const UInt_t accTime100msInterval = (fDataRecord[6] >> 8)*100;      //edited  by N. Haußmann
+	return (accTime1msInterval+accTime100msInterval);                  //edited  by N. Haußmann 
 }
 
 inline UInt_t ORAmptekDP5SpectrumDecoder::GetRealTime() 
@@ -130,7 +138,40 @@ inline UInt_t ORAmptekDP5SpectrumDecoder::GetRealTime()
 	return (fDataRecord[7]);
 }
 
+//Status Functions - implemented by N. Haußmann , March '18
+inline Int_t ORAmptekDP5SpectrumDecoder::GetBoardTemperature() 
+{
+    Char_t statusData[64];
+    CopyStatusData(statusData);
+    return Int_t(statusData[34]);   
+}
 
+inline UInt_t ORAmptekDP5SpectrumDecoder::GetFastChannelCounter() 
+{
+    Char_t statusData[64];
+    CopyStatusData(statusData);
+    
+    UInt_t aVal = 0;
+    aVal = (aVal << 8) + (UChar_t)(statusData[3]);
+    aVal = (aVal << 8) + (UChar_t)(statusData[2]);
+    aVal = (aVal << 8) + (UChar_t)(statusData[1]);
+    aVal = (aVal << 8) + (UChar_t)(statusData[0]);
+    return aVal;
+}
+
+inline UInt_t ORAmptekDP5SpectrumDecoder::GetSlowChannelCounter() 
+{
+    Char_t statusData[64];
+    CopyStatusData(statusData);
+    
+    UInt_t aVal = 0;
+    aVal = (aVal << 8) + (UChar_t)(statusData[7]);
+    aVal = (aVal << 8) + (UChar_t)(statusData[6]);
+    aVal = (aVal << 8) + (UChar_t)(statusData[5]);
+    aVal = (aVal << 8) + (UChar_t)(statusData[4]);
+    return aVal;
+
+}
 
 /*! Returns the number of the waveform in shorts (two shorts are stored in one long int / int32).
  *  Will be set by SetDataRecord(...)

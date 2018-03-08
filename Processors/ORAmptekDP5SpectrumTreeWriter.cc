@@ -36,6 +36,9 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::InitializeBranches()
     fTree->Branch("status", fStatus, "status[64]/B");//signed bytes
     
     fTree->Branch("boardTemperature", &fBoardTemperature, "boardTemperature/I");//signed int
+    fTree->Branch("fastChannelCount", &fFastChannelCount, "fastChannelCount/I");
+    fTree->Branch("slowChannelCount", &fSlowChannelCount, "slowChannelCount/I");
+
     
   //fTree->Branch("wfLength", &fWaveformLength, "wfLength/i");
   //fTree->Branch("eventSubSec", &fSubSec, "eventSubSec/i");//i=unsigned (capital i=I signed int)
@@ -56,19 +59,16 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::ProcessMyDataRecord(
   // ruin the rest of the run.
   if(!fEventDecoder->SetDataRecord(record)) return kFailure;
       // check severity to improve speed:
-    
     fInfoFlags = 0;
     fDeviceID = 0;
     
     fSpectrumLength  = fEventDecoder->GetSpectrumLen();
     fInfoFlags = fEventDecoder->GetInfoFlags();
-    fDeviceID = fEventDecoder->GetSec();
+    fDeviceID = fEventDecoder->GetDeviceID(); //changed by N. Haußmann - wrong method was used before
     fSec = fEventDecoder->GetSec();
-    fAcqTime     =  fEventDecoder->GetAcqTime();
+    fAcqTime     =  fEventDecoder->GetAcqTime(); 
     fRealTime    =  fEventDecoder->GetRealTime();
 
-    
-    
     
     if (ORLogger::GetSeverity() >= ORLogger::kDebug) 
     { 
@@ -90,7 +90,9 @@ ORDataProcessor::EReturnCode ORAmptekDP5SpectrumTreeWriter::ProcessMyDataRecord(
         ORLog(kDebug) << "fEventDecoder->CopyStatusData( fStatus ): status[34]=board temperature is "
         << int(fStatus[34])  
         << endl;
-    fBoardTemperature = int(fStatus[34]);
+    fBoardTemperature = fEventDecoder->GetBoardTemperature();
+    fFastChannelCount = fEventDecoder->GetFastChannelCounter();
+    fSlowChannelCount = fEventDecoder->GetSlowChannelCounter();
     
     return kSuccess;
     

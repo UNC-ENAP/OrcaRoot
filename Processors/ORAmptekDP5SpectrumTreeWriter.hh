@@ -41,7 +41,9 @@ class ORAmptekDP5SpectrumTreeWriter : public ORVTreeWriter
     UInt_t fAcqTime;
     UInt_t fRealTime;
     Int_t  fBoardTemperature;
-    Char_t fStatus[64];  
+    Char_t fStatus[64];
+    UInt_t fFastChannelCount;
+    UInt_t fSlowChannelCount;
     
     //TODO: there are some vars remaining from EDW SLT object ... -tb-
     UInt_t fSec, fSubSec;
