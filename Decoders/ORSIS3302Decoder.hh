@@ -101,7 +101,10 @@ public:
     /* Functions that return information about card/channel settings. */
     /* These are static throughout a run, so a processor should take  * 
      * advantage of this and maybe not query during each record.      */
-	
+    virtual inline size_t GetPeakingTime(size_t crate, size_t card, size_t channel) {
+	  return ((ORDictValueI*) (GetArrayFromKey("energyPeakingTimes", crate, card)->At(channel/2)))->GetI();
+    }
+
     /* Functions satisfying the ORVDigitizerDecoder interface. */
     virtual inline double GetSamplingFrequency() { return .1; }
     virtual inline UShort_t GetBitResolution() { return 16; }
