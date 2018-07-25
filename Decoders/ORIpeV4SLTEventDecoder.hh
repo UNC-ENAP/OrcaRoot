@@ -5,6 +5,12 @@
 
 #include "ORVBasicTreeDecoder.hh"
 
+#define kUnknownType        0
+#define kSecondsCounterType    1
+#define kVetoCounterType    2
+#define kDeadCounterType    3
+#define kRunCounterType        4
+
 /** Decodes the binary Orca data format and writes it into a ROOT TFile.
   * The binary data format description is in \file ORIpeV4SLTDecoder.m .
   * In  \file ORIpeV4SLTModel.m in in - (NSDictionary*) dataRecordDescription
