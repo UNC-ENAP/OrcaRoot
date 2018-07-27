@@ -12,6 +12,7 @@
 /config.log
 /autom4te.cache
 /*/Makefile
+/cmake/
 
 # /Applications/
 /Applications/Makefile
