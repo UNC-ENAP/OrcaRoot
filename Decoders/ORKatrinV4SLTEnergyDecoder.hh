@@ -171,7 +171,7 @@ inline UInt_t ORKatrinV4SLTEnergyDecoder::GetValleyPos(size_t iEvent)
 
 inline UChar_t ORKatrinV4SLTEnergyDecoder::GetIsBipolarEvent(size_t iEvent)
 {
-    if(GetPeakADC(iEvent)==0 && GetValleyADC(iEvent)==0 ) return 0;
+    if(GetPeakADC(iEvent)==0 && GetValleyADC(iEvent)==4096 ) return 0;
 	else return 0x1;
 }
 
