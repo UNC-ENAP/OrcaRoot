@@ -5,14 +5,16 @@
 
 #include "ORVBasicTreeDecoder.hh"
 
-#define kUnknownType        0
-#define kSecondsCounterType    1
-#define kVetoCounterType    2
-#define kDeadCounterType    3
-#define kRunCounterType        4
-#define kLostFltEventCounterType 5
-#define kLostSltEventCounterType 6
+#define kUnknownType               0
+#define kSecondsCounterType        1
+#define kVetoCounterType           2
+#define kDeadCounterType           3
+#define kRunCounterType            4
+#define kLostFltEventCounterType   5
+#define kLostSltEventCounterType   6
 #define kLostFltEventTrCounterType 7
+#define kSyncMessageType           8
+
 
 /** Decodes the binary Orca data format and writes it into a ROOT TFile.
   * The binary data format description is in \file ORKatrinV4SLTDecoder.m .
@@ -35,7 +37,11 @@
 		#define kVetoCounterType	2
 		#define kDeadCounterType	3
 		#define kRunCounterType		4
-
+        #define kLostFltEventCounterType 5
+        #define kLostSltEventCounterType 6
+        #define kLostFltEventTrCounterType 7
+        #define kSyncMessageType 8
+ 
 		Time Stamp Record Types used with the
 		Slt time stamps (see shipSltTimestamp). Used with the Counter Type above ...
 	
@@ -49,7 +55,7 @@
   *
   * This format is recognized by the return value of GetDataObjectPath() which is
   * "ORKatrinV4SLTModel:KatrinV4SLTEvent".
-  */ //-tb- 2010-05-5 .
+  */
 class ORKatrinV4SLTEventDecoder : public ORVBasicTreeDecoder
 {
   public:
