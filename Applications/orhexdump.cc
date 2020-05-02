@@ -115,6 +115,7 @@ int main(int argc, char** argv)
 	break;
       case('d'): // device
         device = optarg;
+	break;
       case('l'): // linelength
 	linelength=atoi(optarg);
 	break;

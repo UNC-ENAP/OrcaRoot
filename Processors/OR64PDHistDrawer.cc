@@ -78,7 +78,7 @@ ORDataProcessor::EReturnCode OR64PDHistDrawer::StartRun()
         maxT = 1800;
         fRefreshTime = 10;
       }          
-    } catch ( ifstream::failure fail) {
+    } catch (const ifstream::failure& fail) {
       ORLog(kWarning) << "StartRun(): Problem reading Hist_Settings.txt at line " << lineNum << endl;
     }
   }
@@ -114,7 +114,7 @@ ORDataProcessor::EReturnCode OR64PDHistDrawer::StartRun()
         ecal_constant_error[ecal_ca][ecal_ch]=ecal_c_e;
       }
       
-    } catch ( ifstream::failure fail) {
+    } catch (const ifstream::failure& fail) {
       ORLog(kWarning) << "StartRun(): Problem reading ecal_test.txt at line " << lineNum << endl;
       fUseEcal = false;
       
