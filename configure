@@ -3410,32 +3410,6 @@ $as_echo "no" >&6; }
   fi
 
 
-
-
-  feat=thread
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ROOT has $feat" >&5
-$as_echo_n "checking whether ROOT has $feat... " >&6; }
-  res=`$ROOTCONF --has-$feat`
-  if test "x$res" = "xyes" ; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-    :
-  else
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-    as_fn_error $? "
-   ROOT is not installed with threading enabled which is a required feature of OrcaROOT.
-   This means ROOT did not find the correct thread library (pthread) during configure.
-   Please reinstall ROOT using during the ROOT install process:
-
-   \"./configure --with-thread-libdir=/path/to/lib\"
-
-   /path/to/lib specifies the location of libpthread" "$LINENO" 5
-
-  fi
-
-
-
 ORROOT_HAS_FFTW=""
 ROOTFFTWLIB=""
 
