@@ -62,7 +62,7 @@ public:
   virtual size_t GetNumberOfEventsInFIFO()
   { return fDataRecord[4]; }
   virtual ULong64_t GetEventTime(size_t i)
-  { return fEventRecords[i].start[1] + (fEventRecords[i].start[0] >> 16); }
+  { return fEventRecords[i].start[1] + (fEventRecords[i].start[0] << 16); }
   virtual UInt_t GetEventEnergy(size_t i)
   { return (fEventRecords[i].header3!=0 ? fEventRecords[i].header3[1] : 0); }
   virtual UShort_t GetEventChannel(size_t i)
