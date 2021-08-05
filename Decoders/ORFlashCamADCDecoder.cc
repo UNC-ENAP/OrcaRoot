@@ -46,7 +46,7 @@ UShort_t ORFlashCamADCDecoder::GetEventChannel(size_t event){
 
 size_t ORFlashCamADCDecoder::GetEventWaveformLength(size_t event){
   if(event >= GetNumberOfEvents()) return 0;
-  return (((fDataRecord[1] & 0x003fffc0) >> 6) + 1) / 2;
+  return (fDataRecord[1] & 0x003fffc0) >> 6;
 }
 
 UInt_t* ORFlashCamADCDecoder::GetWaveformStart(size_t event){
@@ -58,6 +58,7 @@ UInt_t* ORFlashCamADCDecoder::GetWaveformStart(size_t event){
 
 UInt_t ORFlashCamADCDecoder::GetEventWaveformPoint(size_t event,
 						   size_t waveformPoint){
-  if(event >= GetNumberOfEvents()) return 0;
-  return GetWaveformStart(event)[waveformPoint];
+  if(event >= GetNumberOfEvents() ||
+     waveformPoint >= GetEventWaveformLength(event)) return 0;
+  return (UInt_t) ((UShort_t*) GetWaveformStart(event))[waveformPoint];
 }
