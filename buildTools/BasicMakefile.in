@@ -68,7 +68,7 @@ clean:
 
 $(DICTCFILES) : $(DICTHFILES) $(LINKDEF) 
 	@echo "$(OUTPREFIX)Running rootcint .... $(notdir $(LINKDEF))"
-	$(VERBOSE)$(ROOTCINT) -f $@ -c $(CXXFLAGS) $(ORFLAGS) -p $(DICTHFILES) $(LINKDEF)
+	$(VERBOSE)$(ROOTCINT) -f $@ -c $(CINTFLAGS) $(ORFLAGS) -p $(DICTHFILES) $(LINKDEF)
 #if using ROOT 6, a pcm file is created which must be linked in the lib directory
 	@test $(DICTPCMFILE) && ln -sf $(PWD)/$(DICTPCMFILE) ../lib
 

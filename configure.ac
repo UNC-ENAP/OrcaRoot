@@ -84,18 +84,6 @@ ROOT_FEATURE([xml], [],
    /path/to/lib specifies the location of libxml2])
   )
 
-ROOT_FEATURE([thread], [], 
-  AC_MSG_ERROR([
-   ROOT is not installed with threading enabled which is a required feature of OrcaROOT. 
-   This means ROOT did not find the correct thread library (pthread) during configure.
-   Please reinstall ROOT using during the ROOT install process: 
-
-   "./configure --with-thread-libdir=/path/to/lib"
-
-   /path/to/lib specifies the location of libpthread])
-  )
-
-
 ORROOT_HAS_FFTW=""
 ROOTFFTWLIB=""
 ROOT_FEATURE([fftw3], 
