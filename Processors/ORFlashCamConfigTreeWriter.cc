@@ -1,21 +1,21 @@
-// ORFlashCamListenerTreeWriter.cc
+// ORFlashCamConfigTreeWriter.cc
 
-#include "ORFlashCamListenerTreeWriter.hh"
+#include "ORFlashCamConfigTreeWriter.hh"
 
 using namespace std;
 
-ORFlashCamListenerTreeWriter::ORFlashCamListenerTreeWriter(string treeName) :
-  ORVTreeWriter(new ORFlashCamListenerDecoder, treeName){
-  fDecoder = dynamic_cast<ORFlashCamListenerDecoder*>(fDataDecoder);
+ORFlashCamConfigTreeWriter::ORFlashCamConfigTreeWriter(string treeName) :
+  ORVTreeWriter(new ORFlashCamConfigDecoder, treeName){
+  fDecoder = dynamic_cast<ORFlashCamConfigDecoder*>(fDataDecoder);
   Clear();
   SetDoNotAutoFillTree();
 }
 
-ORFlashCamListenerTreeWriter::~ORFlashCamListenerTreeWriter(){
+ORFlashCamConfigTreeWriter::~ORFlashCamConfigTreeWriter(){
   delete fDecoder;
 }
 
-void ORFlashCamListenerTreeWriter::Clear(){
+void ORFlashCamConfigTreeWriter::Clear(){
   fReadoutID         = 0;
   fListenerID        = 0;
   fEventListID       = 0;
@@ -34,7 +34,7 @@ void ORFlashCamListenerTreeWriter::Clear(){
 } 
 
 ORDataProcessor::EReturnCode
-ORFlashCamListenerTreeWriter::InitializeBranches(){
+ORFlashCamConfigTreeWriter::InitializeBranches(){
   fTree->Branch("readoutID",        &fReadoutID,        "readoutID/i");
   fTree->Branch("listenerID",       &fListenerID,       "listenerID/i");
   fTree->Branch("eventListID",      &fEventListID,      "eventListID/I");
@@ -54,7 +54,7 @@ ORFlashCamListenerTreeWriter::InitializeBranches(){
 }
 
 ORDataProcessor::EReturnCode
-ORFlashCamListenerTreeWriter::ProcessMyDataRecord(UInt_t* record){
+ORFlashCamConfigTreeWriter::ProcessMyDataRecord(UInt_t* record){
   fReadoutID         = fDecoder->GetReadoutID(record);
   fListenerID        = fDecoder->GetListenerID(record);
   fEventListID       = fDecoder->GetEventListID(record);
