@@ -1,16 +1,16 @@
-// ORFlashCamListenerDecoder.hh
+// ORFlashCamConfigDecoder.hh
 
-#ifndef _ORFlashCamListenerDecoder_hh_
-#define _ORFlashCamListenerDecoder_hh_
+#ifndef _ORFlashCamConfigDecoder_hh_
+#define _ORFlashCamConfigDecoder_hh_
 
 #include "ORVDataDecoder.hh"
 
-class ORFlashCamListenerDecoder : public ORVDataDecoder {
+class ORFlashCamConfigDecoder : public ORVDataDecoder {
 public:
 
-  ORFlashCamListenerDecoder(){}
-  virtual ~ORFlashCamListenerDecoder(){}
-  enum EORFlashCamListenerConsts{ kMaxADCChannels = 2400 };
+  ORFlashCamConfigDecoder(){}
+  virtual ~ORFlashCamConfigDecoder(){}
+  enum EORFlashCamConfigConsts{ kMaxADCChannels = 2400 };
   virtual std::string GetDataObjectPath()
   { return "ORFlashCamListenerModel:FlashCamConfig"; }
   

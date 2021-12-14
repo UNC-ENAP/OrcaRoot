@@ -1,18 +1,17 @@
-// ORFlashCamListenerTreeWriter.hh
+// ORFlashCamConfigTreeWriter.hh
 
-#ifndef _ORFlashCamListenerTreeWriter_hh_
-#define _ORFlashCamListenerTreeWriter_hh_
+#ifndef _ORFlashCamConfigTreeWriter_hh_
+#define _ORFlashCamConfigTreeWriter_hh_
 
 #include "ORVTreeWriter.hh"
-#include "ORFlashCamListenerDecoder.hh"
+#include "ORFlashCamConfigDecoder.hh"
 #include <string>
 #include <vector>
 
-class ORFlashCamListenerTreeWriter : public ORVTreeWriter
-{
+class ORFlashCamConfigTreeWriter : public ORVTreeWriter {
 public:
-  ORFlashCamListenerTreeWriter(std::string treeName="");
-  virtual ~ORFlashCamListenerTreeWriter();
+  ORFlashCamConfigTreeWriter(std::string treeName="");
+  virtual ~ORFlashCamConfigTreeWriter();
 
   virtual EReturnCode ProcessMyDataRecord(UInt_t* record);
   virtual inline void Clear();
@@ -20,7 +19,7 @@ public:
 protected:
   virtual EReturnCode InitializeBranches();
   
-  ORFlashCamListenerDecoder* fDecoder;
+  ORFlashCamConfigDecoder* fDecoder;
   UInt_t fReadoutID;
   UInt_t fListenerID;
   Int_t fEventListID;
