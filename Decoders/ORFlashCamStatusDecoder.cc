@@ -120,7 +120,7 @@ UInt_t ORFlashCamStatusDecoder::GetCardADCTemp(UInt_t* record,
 					       UInt_t index, UInt_t ti){
   if(ti >= kADCTemps) return 0;
   return record[CardOffset(record, index)+14+
-		kOtherErrors+kCardTemps+kCardVoltages+2];
+		kOtherErrors+kCardTemps+kCardVoltages+2+ti];
 }
 
 UInt_t ORFlashCamStatusDecoder::GetCardCTILink(UInt_t* record,
