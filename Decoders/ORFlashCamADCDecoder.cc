@@ -39,9 +39,22 @@ UInt_t ORFlashCamADCDecoder::GetEventBaseline(size_t event){
 }
 
 UShort_t ORFlashCamADCDecoder::GetEventChannel(size_t event){
+  return GetEventChannel(event, "ORFlashCamWaveformDecoder");
+}
+
+UShort_t ORFlashCamADCDecoder::GetEventChannel(size_t event,
+					       std::string decoder){
   if(event >= GetNumberOfEvents()) return 0;
-  return UShort_t((CrateOf() << 12) +
-		  (CardOf()  <<  4) + ((fDataRecord[2] & 0x00003c00) >> 10));
+  if(decoder == "ORFlashCamADCWaveformDecoder")
+    return UShort_t((CrateOf() << 12) +
+		    (CardOf()  <<  4) + ((fDataRecord[2] & 0x00003c00) >> 10));
+  else{
+    if(decoder != "ORFlashCamWaveformDecoder")
+      ORLog(kWarning)<<"GetEventChannel(event, decoder): unrecognized decoder "
+		     <<decoder<<" default to ORFlashCamWaveformDecoder"<<endl;
+    return UShort_t((CrateOf() << 12) +
+		    (CardOf()  <<  4) + ((fDataRecord[2] & 0x00003e00) >>  9));
+  }
 }
 
 size_t ORFlashCamADCDecoder::GetEventWaveformLength(size_t event){

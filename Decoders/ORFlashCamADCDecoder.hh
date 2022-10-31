@@ -26,6 +26,7 @@ public:
   virtual UInt_t GetEventEnergy(size_t event);
   virtual UInt_t GetEventBaseline(size_t event);
   virtual UShort_t GetEventChannel(size_t event);
+  virtual UShort_t GetEventChannel(size_t event, std::string decoder);
 
   /* Waveform level functions */
   virtual size_t GetEventWaveformLength(size_t event);
